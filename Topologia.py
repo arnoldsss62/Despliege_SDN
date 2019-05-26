@@ -1,5 +1,5 @@
-
-def CreacionSwitches():
+from Model import *
+def Topologia():
     topologia=input("Ingrese el tipo de topologia,lineal(L) anillo(A) :")
     num_switches=input("Ingrese el numero de switches(3-8)")
     opcionlb_ovs=input("Desea utilizar linux bridge(lb) o ovs(ovs)?")
@@ -10,13 +10,11 @@ def CreacionSwitches():
     if(opcion=="lb"):
         #Creacion de switches
     	for i in range(1,nswitches+1):
-    		cadena="sudo brctl addbr br_%s" %i       
-        	sub(cadena).stdout
-        	br.append("br_%s" %i)
+        	br.append(Bridge("br_%s" %i,"lb"))
         #Creacion de enlaces veth
     	for i in range(1,nswitches):
-        	cadena="sudo ip link add veth%s_%s type veth peer name veth%s_%s" %(i,i+1,i+1,i)
-        	sub(cadena).stdout
+            ext_a="veth%s_%s" %(i,i+1);ext_b="veth%s_%s" %(i+1,i)
+            interface().crea_veth(ext_a,ext_b)
         #Asignar interfaz a l linux bridges 
     	for i in range(1,nswitches+1):
             #Añade interefaz con vecino de la izquiera(cadena1) derecha(cadena2)

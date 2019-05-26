@@ -1,8 +1,9 @@
 import os 
 import subprocess
+from Topologia import *
 br=[]
 ovs=[]
-veth[]
+veth=[]
 ns=[1]
 def sub (cadena):
     obj=subprocess.run([cadena],stdout=subprocess.PIPE, shell=True)
@@ -10,6 +11,9 @@ def sub (cadena):
 
 def Exit():
     print("Bye Bye")
+    return True
+def CreacionSwitches():
+    Topologia()
     return True 
 
 def AgregarNs():
