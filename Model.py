@@ -11,10 +11,12 @@ class Bridge:
 	def add_interface(self,n_interface,n_interface2=""):
 		if tipo=="lb":
 			sub("sudo brctl addif %s %s" %(self.nombre,n_interface).stdout
+			self.interfaces.append(n_interface)
 		elif tipo=="ovs":
 			sub("sudo ovs-vsctl add-port %s %s" %(self.name,n_interface)).stdout
 			sub("ovs-vsctl set interface %s type=patch", %n_interface).stdout
 			sub("ovs-vsctl set interface %s options:peer=%s" %(n_interface,n_interface2)).stdout
+			self.interfaces.append(n_interface)
 
 	def __init__(self, nombre,tipo):
 		self.nombre=nombre

@@ -5,6 +5,10 @@ br=[]
 ovs=[]
 veth=[]
 ns=[1]
+def buscar_bridge(lista, nombre)
+    for i in lista:
+        if i.nombre ==nombre
+            return i
 def sub (cadena):
     obj=subprocess.run([cadena],stdout=subprocess.PIPE, shell=True)
     return obj
@@ -19,29 +23,38 @@ def CreacionSwitches():
 def AgregarNs():
     opcion=input("Indique el nombre de switch a agregar el NS:")
     nbridge=int(opcion)
-    if(ns[len(ns)-1]==1):
-        sub("sudo ip netns add ns_%s" %ns[0])
-        sub("sudo ip link add ns%s_%s type veth peer name br%s_%s" %(ns[0],nbridge,nbridge,ns[0]))
-        sub("sudo brctl addif br_%s br%s_%s" %(nbridge,nbridge,1))
-        sub("ip link set ns1_%s netns ns_1" %(nbridge))
+    if not ns
+        #Crear el NS
+        nsp=NameSpace("ns_1")
+        extr_a="veth%s_%s" %(nsp.nombre,opcion); extr_b="veth%s_%s" %(opcion,nsp.nombre)
+        Interface().crea_veth(extr_a,extr_b)
+        br=buscar_bridge(opcion,bridge)
+        br.add_interface(extr_b)
+        ns.add_interface(extr_a)
     else:
         #se le suma 1 al ultimo valor y lo agrego al final de la lista
-        ns.append(ns[len(ns)ns[len(ns)-1]+1)
         ultimo=ns[len(ns)
+        nsp=NameSpace("ns_%s" %(ultimo+1))
+        extr_a="veth%s_%s" %(nsp.nombre,opcion); extr_b="veth%s_%s" %(opcion,nsp.nombre)
+        Interface().crea_veth(extr_a,extr_b)
+        br=buscar_bridge(opcion,bridge)
+        br.add_interface(extr_b)
+        ns.add_interface(extr_a)
         #Crear NS, crear enlace veth, añadir interfaz veth al bridge, interfaz veth al ns  
+        """
         sub("sudo ip netns add ns_%s" %ultimo
         sub("sudo ip link add ns%s_%s type veth peer name br%s_%s" %(ultimo,nbridge,nbridge,ultimo))
         sub("sudo brctl addif br_%s br%s_%s" %(nbridge,nbridge,ultimo))
         sub("ip link set ns%s_%s netns ns_%s" %(ultimo,nbridge,ultimo))
+        """
+
 
 def NuevoSw():
-    opcion=input("Ingresar el switch a cnectar")
-    tipo=input("El switch a agregar es LB(L) o OVS(O)")
-    if opcion in br and tipo==L:
-        sub("sudo brctl addbr br_%s")
-        sub("sudo ip link add  type veth peer name %s" %(opcion)).stdout
-        
+    nuevo=input("Ingresar el switch a conectar")
+    switch=input
+    if
 
+        
 MENU = {1:CreacionSwitches,7:Exit}	
 
 while 1:
@@ -53,13 +66,5 @@ while 1:
     ex = MENU[opt]()
     if ex:
         break
-        
-    #except KeyError:
-    #    print("Invalid option!\n")
-    #except ValueError:
-    #    print("Option must be an integer!\n")
-    #except:
-    #    print("An error occurred!\n")
-
 
 
