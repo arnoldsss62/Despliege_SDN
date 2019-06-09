@@ -46,4 +46,24 @@ def Topologia():
                 ovs.add_interface("patch%s_%s" %(i,i-1),"patch%s_%s" %(i-1,i))
                 ovs.add_interface("patch%s_%s" %(i,i+1),"patch%s_%s" %(i+1,i))
             
-    return False
+    return True
+    
+def AgregarNs():
+    opcion=input("Indique el nombre de switch a agregar el NS:")
+    nbridge=int(opcion)
+    if not ns: 
+        nsp=NameSpace("ns_1")
+        extr_a="veth%s_%s" %(nsp.nombre,opcion); extr_b="veth%s_%s" %(opcion,nsp.nombre)
+        Interface().crea_veth(extr_a,extr_b)
+        br=buscar_bridge(opcion,bridge)
+        br.add_interface(extr_b)
+        ns.add_interface(extr_a)
+    else:
+        ultimo=ns[len(ns)
+        nsp=NameSpace("ns_%s" %(ultimo+1))
+        extr_a="veth%s_%s" %(nsp.nombre,opcion); extr_b="veth%s_%s" %(opcion,nsp.nombre)
+        Interface().crea_veth(extr_a,extr_b)
+        br=buscar_bridge(opcion,bridge)
+        br.add_interface(extr_b)
+        ns.add_interface(extr_a)
+

@@ -25,5 +25,4 @@ hex_ip2 = str_zeros + hex_ip2
 # Convert to dot decimal IPv4 address format
 ip2 = hex2ip(hex_ip2)
 
-print("Initial IPv4: %s" % (ip))
-print("Final IPv4: %s" % (ip2))
+print("%s" % (ip2))
